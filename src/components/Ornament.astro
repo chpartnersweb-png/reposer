@@ -1,0 +1,9 @@
+---
+interface Props { class?: string; }
+const { class: className } = Astro.props;
+---
+<svg class:list={['ornament', className]} width="150" height="40" viewBox="0 0 150 40" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true">
+  <path d="M75 35V12m0 18c-10-17-28-14-27-5 1 8 14 8 18 3M75 30c10-17 28-14 27-5-1 8-14 8-18 3M61 22C47 8 27 18 32 27c4 7 13 0 8-3M89 22c14-14 34-4 29 5-4 7-13 0-8-3M34 29H5m111 0h29M75 2l4 6-4 6-4-6 4-6Z" />
+  <path d="M61 29c-10 11-24 7-25 3m53-3c10 11 24 7 25 3" />
+  <circle cx="17" cy="25" r="1.3" fill="currentColor" stroke="none" /><circle cx="133" cy="25" r="1.3" fill="currentColor" stroke="none" />
+</svg>

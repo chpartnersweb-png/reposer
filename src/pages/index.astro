@@ -1,16 +1,90 @@
 ---
----
+import { Image } from 'astro:assets';
+import Icon from '../components/Icon.astro';
+import Ornament from '../components/Ornament.astro';
+import Hero from '../components/Hero.astro';
+import { site, navigation, courses, options } from '../data/site';
+import room from '../assets/IMG_0064.jpg';
+import roomEvening from '../assets/IMG_0070.jpg';
+import lounge from '../assets/IMG_0065.jpg';
+import detail from '../assets/IMG_0072.jpg';
+import '../styles/global.css';
+import '../styles/hero.css';
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+const yen = (value: number) => value.toLocaleString('ja-JP');
+const information = [
+  { label: '所在地', value: site.address },
+  { label: 'アクセス', value: `${site.access} ／ ${site.parking}` },
+  { label: '受付時間', value: `${site.reception}（${site.receptionNote}）` },
+  { label: '定休日', value: site.holiday },
+  { label: 'ルーム数', value: `${site.rooms} ／ 完全予約制` },
+  { label: 'お支払い', value: site.payment },
+];
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={site.description} />
+    <meta name="theme-color" content="#101011" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={site.title} />
+    <meta property="og:description" content={site.description} />
+    <link rel="icon" type="image/svg+xml" href="/reposer.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
+    <title>{site.title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へ移動</a>
+    <header class="site-header" id="site-header">
+      <a href="#top" class="brand" aria-label="Reposer〜ルポゼ〜 トップへ"><span class="brand-name">Reposer<span class="brand-dot">.</span></span><span class="brand-sub">ルポゼ <span>MIYAKONOJO</span></span></a>
+      <nav class="desktop-nav" aria-label="メインナビゲーション">{navigation.map((item) => <a href={item.href}>{item.en}<span>{item.label}</span></a>)}</nav>
+      <a class="header-reservation" href="#reservation"><span>ご予約</span><Icon name="arrow" size={19} /></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く" aria-haspopup="dialog" aria-controls="mobile-menu"><span></span><span></span></button>
+    </header>
+    <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="mobile-menu-title">
+      <div class="mobile-menu-top"><span id="mobile-menu-title" class="serif-en">Reposer.</span><button id="menu-close" aria-label="メニューを閉じる"><Icon name="close" /></button></div>
+      <nav aria-label="モバイルナビゲーション">{navigation.map((item) => <a href={item.href}><span class="serif-en">{item.en}</span><span>{item.label}</span><Icon name="arrow" size={20} /></a>)}<a href="#reservation"><span class="serif-en">Reservation</span><span>ご予約</span><Icon name="arrow" size={20} /></a></nav>
+      <div class="mobile-menu-bottom"><p>宮崎県都城市のメンズエステ</p><a href={site.phoneHref}>{site.phone}</a><p>受付 {site.reception} ／ {site.holiday}</p></div>
+    </dialog>
+    <main id="main">
+      <Hero />
+      <section class="concept section-pad" id="concept" aria-labelledby="concept-title">
+        <div class="container concept-grid">
+          <div class="concept-photo reveal"><Image src={room} alt="自然光の入るルポゼの室内" widths={[400, 640, 900]} sizes="(max-width: 760px) 85vw, 38vw" loading="lazy" /><span class="photo-caption">A place to unwind.</span><span class="photo-corner" aria-hidden="true"></span></div>
+          <div class="concept-copy"><p class="eyebrow reveal"><span class="eyebrow-line"></span>OUR PHILOSOPHY</p><h2 id="concept-title" class="jp-heading reveal">日常を離れ、<br />自分をいたわる贅沢を。</h2><p class="body-copy reveal">慌ただしい毎日から、少しだけ離れて。<br />心も身体も、ゆっくりとほどけていく。<br />そんなひとときを、ルポゼで。</p><p class="body-copy reveal">確かな技術と、心を込めたおもてなし。<br />華やかさと安らぎが寄り添う空間で、<br />あなたのための癒しの時間をお過ごしください。</p><div class="concept-facts reveal"><span>完全予約制</span><span>3ルーム</span><span>駐車場あり</span></div><p class="healthy-note reveal"><span aria-hidden="true">◇</span> 完全安心健全店です。</p></div>
+        </div><p class="concept-watermark" aria-hidden="true">The art of relaxation.</p>
+      </section>
+      <section class="menu-section section-pad light-section" id="menu" aria-labelledby="menu-title">
+        <div class="container"><div class="section-heading reveal"><p class="eyebrow">TREATMENT & PRICE</p><h2 id="menu-title" class="display-heading">A little luxury.</h2><p class="section-subtitle">心ほどける、ご褒美の時間。</p><Ornament /></div><div class="menu-intro reveal"><h3>ゴージャスコース</h3><p>お好みの時間に合わせてお選びください。</p></div>
+          <div class="course-list">{courses.map((course) => <article class="course-row reveal"><div class="course-identity"><span class="rank">{course.rank}</span><h4>{course.name}</h4><p>{course.description}</p></div><p class="course-time"><strong>{course.minutes}</strong><span>min / 分</span></p><p class="course-price"><span>¥</span>{yen(course.price)}</p></article>)}</div>
+          <div class="options-grid reveal"><div class="options-title"><p class="eyebrow">A PERSONAL TOUCH</p><h3>オプション</h3><p>癒しの時間を、あなた好みに。</p></div><dl class="option-list">{options.map((option) => <div><dt><span class="option-rank">{option.rank}</span>{option.name}</dt><dd><span>¥</span>{yen(option.price)}</dd></div>)}</dl></div>
+          <div class="menu-bottom reveal"><p class="payment-note">お支払い：{site.payment}<br /><span>※{site.paymentNote}</span></p><a class="text-link" href="#reservation">ご予約はこちら<Icon name="arrow" size={22} /></a></div>
+        </div>
+      </section>
+      <section class="space-section section-pad" id="space" aria-labelledby="space-title">
+        <div class="container"><div class="space-intro"><div class="reveal"><p class="eyebrow"><span class="eyebrow-line"></span>THE SPACE</p><h2 id="space-title" class="jp-heading">気負わず、くつろぐ。<br />ここだけのひととき。</h2></div><p class="body-copy reveal">扉の向こうにある、穏やかな時間。<br />さりげない温もりに包まれて、<br />心地よいひと休みを。</p></div><div class="space-gallery"><figure class="space-main reveal"><Image src={roomEvening} alt="間接照明と落ち着いた色のカーテンがあるサロンの室内" widths={[600, 960, 1400]} sizes="(max-width: 760px) 90vw, 65vw" loading="lazy" /><figcaption><span class="serif-en">Slow down. Breathe out.</span><span>日常に、やさしい余白を。</span></figcaption></figure><figure class="space-detail reveal"><Image src={detail} alt="小物やディフューザーを飾った室内の棚" widths={[300, 480, 640]} sizes="(max-width: 760px) 42vw, 25vw" loading="lazy" /><figcaption>A touch of warmth.</figcaption></figure></div></div>
+      </section>
+      <section class="flow-section section-pad" aria-labelledby="flow-title">
+        <div class="container flow-layout"><div class="flow-heading reveal"><p class="eyebrow">YOUR FIRST VISIT</p><h2 id="flow-title" class="jp-heading">はじめての方へ。</h2><p class="body-copy">ご予約から、ご来店まで。</p></div><ol class="flow-list"><li class="reveal"><span class="step-no" aria-hidden="true">01</span><div><h3>ご希望をお聞かせください</h3><p>電話・エステ魂・LINEから、ご希望の日時とコースをご連絡ください。</p></div></li><li class="reveal"><span class="step-no" aria-hidden="true">02</span><div><h3>ご案内をご確認ください</h3><p>予約内容やご来店方法について、店舗からのご案内をご確認ください。</p></div></li><li class="reveal"><span class="step-no" aria-hidden="true">03</span><div><h3>心やすらぐひとときを</h3><p>ご予約の日時にお越しください。心を込めてお迎えいたします。</p></div></li></ol></div>
+      </section>
+      <section class="access-section section-pad light-section" id="access" aria-labelledby="access-title">
+        <div class="container access-layout"><div class="access-copy"><p class="eyebrow reveal">SALON INFORMATION</p><h2 id="access-title" class="display-heading reveal">Find your repose.</h2><p class="access-subtitle reveal">都城市で出会う、安らぎの場所。</p><dl class="information reveal">{information.map((item) => <div><dt>{item.label}</dt><dd>{item.value}</dd></div>)}</dl><p class="payment-note reveal">※{site.paymentNote}</p><a class="access-phone reveal" href={site.phoneHref}><Icon name="phone" size={24} /><span>{site.phone}</span><Icon name="arrow" size={22} /></a></div><div class="access-photo reveal"><Image src={lounge} alt="丸いテーブルと椅子を配したルポゼの室内" widths={[400, 640, 900]} sizes="(max-width: 760px) 90vw, 40vw" loading="lazy" /><span class="access-photo-label">Reposer<span>MIYAKONOJO, MIYAZAKI</span></span></div></div>
+      </section>
+      <section class="reservation-section section-pad" id="reservation" aria-labelledby="reservation-title">
+        <div class="container"><div class="section-heading reveal"><Ornament /><p class="eyebrow">RESERVATION</p><h2 id="reservation-title" class="jp-heading">あなたのための時間を、<br />ルポゼで。</h2><p class="body-copy">ご予約・お問い合わせは、こちらから。<br />お好みの方法でお気軽にご連絡ください。</p></div><div class="reservation-methods reveal"><a class="reservation-web" href={site.webUrl} target="_blank" rel="noopener noreferrer"><Icon name="calendar" size={30} /><span><small>WEB RESERVATION</small><strong>エステ魂でWEB予約</strong></span><Icon name="arrow" /><span class="sr-only">（外部サイト・新しいタブ）</span></a><a class="reservation-line" href={site.lineUrl} target="_blank" rel="noopener noreferrer"><Icon name="line" size={30} /><span><small>LINE RESERVATION</small><strong>LINEで予約・問い合わせ</strong></span><Icon name="arrow" /><span class="sr-only">（新しいタブ）</span></a></div><div class="reservation-phone reveal"><p>お電話でのご予約</p><a href={site.phoneHref}><Icon name="phone" size={25} /><span>{site.phone}</span></a><p>受付 {site.reception} <span>／</span> {site.holiday} <span>／</span> 完全予約制</p></div></div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="container"><div class="footer-top"><a class="brand footer-brand" href="#top" aria-label="ページの先頭へ"><span class="brand-name">Reposer<span class="brand-dot">.</span></span><span class="brand-sub">〜 ルポゼ 〜</span></a><p>華やかさの中に、本物の安らぎを。</p><a class="back-top" href="#top" aria-label="ページの先頭へ"><Icon name="arrow" /></a></div><div class="footer-bottom"><p>宮崎県都城市のメンズエステ<span>完全安心健全店</span></p><small>© {new Date().getFullYear()} Reposer. All rights reserved.</small></div></div></footer>
+    <nav class="booking-bar" aria-label="ご予約・お問い合わせ"><a href={site.phoneHref}><Icon name="phone" size={20} /><span>電話予約</span></a><a class="booking-bar-web" href={site.webUrl} target="_blank" rel="noopener noreferrer"><Icon name="calendar" size={20} /><span>WEB予約</span><span class="sr-only">（外部サイト・新しいタブ）</span></a><a href={site.lineUrl} target="_blank" rel="noopener noreferrer"><Icon name="line" size={20} /><span>LINE予約</span><span class="sr-only">（新しいタブ）</span></a></nav>
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
 </html>
