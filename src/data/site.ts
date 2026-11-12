@@ -4,6 +4,8 @@ export const site = {
   phone: '070-6605-0201',
   phoneHref: 'tel:07066050201',
   address: '宮崎県都城市',
+  addressRegion: '宮崎県',
+  addressLocality: '都城市',
   access: '都城駅から車で5〜8分',
   parking: '駐車場あり',
   reception: '9:30〜翌3:00',
@@ -16,7 +18,7 @@ export const site = {
   webUrl: 'https://estama.jp/shop/49703/',
   lineUrl: 'https://line.me/ti/p/k56BRLhubq',
   title: '都城市のメンズエステ Reposer〜ルポゼ〜｜完全予約制',
-  description: '宮崎県都城市のメンズエステ「Reposer〜ルポゼ〜」。華やかさの中に、本物の安らぎを。ゴージャスコース90分17,000円・120分22,000円。完全予約制、駐車場あり。電話・エステ魂・LINEからご予約いただけます。',
+  description: '宮崎県都城市のメンズエステ「Reposer〜ルポゼ〜」。完全予約制・年中無休、受付9:30〜翌3:00。ゴージャスコース90分17,000円・120分22,000円。都城駅から車で5〜8分、駐車場あり。電話・WEB・LINEでご予約いただけます。',
 } as const;
 
 export const navigation = [

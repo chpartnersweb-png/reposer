@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Icon from '../components/Icon.astro';
 import Ornament from '../components/Ornament.astro';
 import Hero from '../components/Hero.astro';
+import SEO from '../components/SEO.astro';
 import { site, navigation, courses, options } from '../data/site';
 import room from '../assets/IMG_0064.jpg';
 import roomEvening from '../assets/IMG_0070.jpg';
@@ -27,19 +28,13 @@ const information = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={site.description} />
+    <SEO />
     <meta name="theme-color" content="#101011" />
     <meta name="format-detection" content="telephone=no" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ja_JP" />
-    <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={site.title} />
-    <meta property="og:description" content={site.description} />
     <link rel="icon" type="image/svg+xml" href="/reposer.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
-    <title>{site.title}</title>
   </head>
   <body>
     <a class="skip-link" href="#main">本文へ移動</a>
@@ -85,7 +80,7 @@ const information = [
       </section>
       <section class="menu-section section-pad light-section" id="menu" aria-labelledby="menu-title">
         <div class="container">
-          <div class="section-heading reveal"><p class="eyebrow">TREATMENT & PRICE</p><h2 id="menu-title" class="display-heading">A little luxury.</h2><p class="section-subtitle">心ほどける、ご褒美の時間。</p><Ornament /></div><div class="menu-intro reveal"><h3>ゴージャスコース</h3><p>お好みの時間に合わせてお選びください。</p></div>
+          <div class="section-heading reveal"><p class="eyebrow">TREATMENT & PRICE</p><p class="display-heading">A little luxury.</p><h2 id="menu-title" class="section-subtitle">メニュー・料金</h2><Ornament /></div><div class="menu-intro reveal"><h3>ゴージャスコース</h3><p>お好みの時間に合わせてお選びください。</p></div>
           <div class="course-list">
             {
               courses.map((course) => (
@@ -145,7 +140,7 @@ const information = [
       <section class="access-section section-pad light-section" id="access" aria-labelledby="access-title">
         <div class="container access-layout">
           <div class="access-copy">
-            <p class="eyebrow reveal">SALON INFORMATION</p><h2 id="access-title" class="display-heading reveal">Find your repose.</h2><p class="access-subtitle reveal">都城市で出会う、安らぎの場所。</p><dl class="information reveal">
+            <p class="eyebrow reveal">SALON INFORMATION</p><p class="display-heading reveal">Find your repose.</p><h2 id="access-title" class="access-subtitle reveal">店舗情報・アクセス</h2><dl class="information reveal">
               {
                 information.map((item) => (
                   <div>

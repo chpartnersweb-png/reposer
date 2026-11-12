@@ -1,0 +1,125 @@
+---
+import { getImage } from 'astro:assets';
+import { site, courses } from '../data/site';
+import room from '../assets/IMG_0064.jpg';
+
+// Use the configured production origin even on preview deployments.
+const canonicalUrl = new URL('/', Astro.site).href;
+const businessId = `${canonicalUrl}#salon`;
+const websiteId = `${canonicalUrl}#website`;
+const webpageId = `${canonicalUrl}#webpage`;
+const socialImage = await getImage({
+  src: room,
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  format: 'jpg',
+  quality: 85,
+});
+const socialImageUrl = new URL(socialImage.src, canonicalUrl).href;
+const socialImageAlt = '都城市のメンズエステ Reposer〜ルポゼ〜の室内';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: canonicalUrl,
+      name: site.name,
+      alternateName: ['Reposer', 'ルポゼ'],
+      inLanguage: 'ja',
+      publisher: { '@id': businessId },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': webpageId,
+      url: canonicalUrl,
+      name: site.title,
+      description: site.description,
+      inLanguage: 'ja',
+      isPartOf: { '@id': websiteId },
+      about: { '@id': businessId },
+      mainEntity: { '@id': businessId },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: socialImageUrl,
+        width: 1200,
+        height: 630,
+        caption: socialImageAlt,
+      },
+    },
+    {
+      '@type': 'HealthAndBeautyBusiness',
+      '@id': businessId,
+      name: site.name,
+      alternateName: ['Reposer', 'ルポゼ'],
+      url: canonicalUrl,
+      description: site.description,
+      image: socialImageUrl,
+      telephone: site.phone,
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'JP',
+        addressRegion: site.addressRegion,
+        addressLocality: site.addressLocality,
+      },
+      currenciesAccepted: 'JPY',
+      paymentAccepted: site.payment,
+      sameAs: [site.webUrl],
+      // Reception hours are not confirmed business opening hours.
+      // Keep them in the description rather than asserting openingHours.
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'メニュー・料金',
+        url: `${canonicalUrl}#menu`,
+        itemListElement: courses.map((course) => ({
+          '@type': 'Offer',
+          name: `${course.name} ${course.minutes}分`,
+          price: course.price,
+          priceCurrency: 'JPY',
+          url: `${canonicalUrl}#menu`,
+          description: `${course.description} ${site.paymentNote}`,
+          itemOffered: {
+            '@type': 'Service',
+            name: `${course.name} ${course.minutes}分`,
+            serviceType: 'メンズエステ',
+            provider: { '@id': businessId },
+          },
+        })),
+      },
+    },
+  ],
+};
+
+// Keep data containing '<' from terminating the JSON-LD script element.
+const jsonLd = JSON.stringify(structuredData).replace(/</g, '\\u003c');
+---
+
+<title>{site.title}</title>
+<meta name="description" content={site.description} />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={site.title} />
+<meta property="og:description" content={site.description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={socialImageUrl} />
+<meta property="og:image:secure_url" content={socialImageUrl} />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={socialImageAlt} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={site.title} />
+<meta name="twitter:description" content={site.description} />
+<meta name="twitter:image" content={socialImageUrl} />
+<meta name="twitter:image:alt" content={socialImageAlt} />
+<meta name="google-site-verification" content="W6X3cwCqNwAUejsnK3WonJ1538dIruj4tj0PKa2gu5U" />
+
+<script type="application/ld+json" set:html={jsonLd} />
